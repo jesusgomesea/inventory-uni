@@ -107,6 +107,21 @@ equipamento, o banco próprio guarda o documento ligado ao **tipo e id do GLPI**
 O tipo do equipamento é genérico (`/api/equipamentos/{tipo}/{id}/documentos`). Hoje só `Computer` é aceito;
 para monitores e impressoras basta liberar o tipo (`DocumentoServico.TIPOS`) e criar a tela.
 
+### 5.1 Termos da TI preenchidos pela ficha
+
+Os modelos de termo já existem e são mantidos pela TI em `Model Termos Eqp/` (HTML com botão "Imprimir / Salvar
+PDF"). A aplicação **não altera nem copia os modelos**: o backend lê o arquivo a cada pedido e injeta um script que
+preenche os campos com a ficha. Editou o modelo, vale na hora.
+
+| Modelo | O que vem preenchido |
+|---|---|
+| Movimentação (recebimento, devolução, empréstimo, transferência) | Colaborador (responsável), loja/unidade (localização), encarregado (técnico logado), tipo, modelo, serial, patrimônio, data |
+| Substituição | Colaborador, loja/unidade e **esta máquina como o equipamento antigo**; o novo o técnico preenche |
+
+Cargo, setor, chamado e o que o GLPI não tem ficam para o técnico completar. O fluxo termina como qualquer termo:
+imprimir, assinar e anexar o termo assinado em "Documentos e termos" (§5), que registra o responsável da época.
+A localização do GLPI ("Loja 14 > Balcão") não é o código de loja do modelo ("14 - …"): confira antes de imprimir.
+
 ## 6. Edição: o que pode e o que não pode
 
 | Editável na ficha | Somente leitura |
@@ -129,7 +144,7 @@ enquanto o técnico editava, recusa (409) e a tela oferece recarregar, em vez de
 | 4 | Documentos e termos no banco próprio; documentos do GLPI só leitura | Feito |
 | 5 | Validar contra o GLPI 10.0.7 real (formatos da API, campos bloqueados) | Falta: precisa do App-Token |
 | 6 (opcional) | Índice local atualizado a cada N minutos: filtros "HDD", "RAM < 8 GB", "sem termo", relatórios de upgrade | Não iniciado |
-| 7 | Termo de responsabilidade em PDF: **integrar o gerador que já existe** (repositório próprio, em preparação), não criar outro | Aguardando o repositório |
+| 7 | Termos da TI (movimentação e substituição) preenchidos a partir da ficha, para imprimir e assinar | Feito (§5.1) |
 
 Filtros por RAM e tipo de disco não estão na lista porque a busca do GLPI não soma memória nem sabe o tipo do
 disco; isso pede o índice da fase 6.

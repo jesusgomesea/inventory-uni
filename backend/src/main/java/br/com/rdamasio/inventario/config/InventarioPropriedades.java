@@ -11,8 +11,16 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
  * versionado: vem de {@code backend/config/application-local.yml} (fora do git) ou da variável GLPI_APP_TOKEN.
  */
 @ConfigurationProperties("inventario")
-public record InventarioPropriedades(Glpi glpi, Discos discos, Documentos documentos,
+public record InventarioPropriedades(Glpi glpi, Discos discos, Documentos documentos, Termos termos,
         @DefaultValue("10m") Duration cacheListas) {
+
+    /**
+     * Modelos de termo em HTML mantidos pela TI (pasta "Model Termos Eqp" na raiz do repositório). São lidos a cada
+     * pedido, então editar o modelo vale na hora, sem reiniciar. O caminho é relativo à pasta onde o backend roda
+     * ({@code backend/}).
+     */
+    public record Termos(@DefaultValue("../Model Termos Eqp") String pasta) {
+    }
 
     /**
      * Documentos anexados por esta aplicação (fora do GLPI).

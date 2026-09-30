@@ -27,6 +27,7 @@ Toda chamada ao GLPI passa por `glpi/GlpiCliente.java`, com o `Session-Token` do
 | `computador/` | Lista, ficha, edição, "ver mais", regra SSD × HDD |
 | `documento/` | Documentos e termos do banco próprio (entidade, serviço, armazenamento em disco) |
 | `opcoes/` | Listas para filtros e edição (status, locais, grupos, busca de usuários) |
+| `termo/` | Termos da TI preenchidos pela ficha: lê `Model Termos Eqp/*.html` e injeta `resources/termo/preencher.js` |
 | `simulador/` | GLPI de mentira, só no perfil `simulador` (dados em `resources/simulador/dados.json`) |
 | `comum/` | Erros (`TratadorErros`), id da requisição, leitura tolerante de JSON (`Json`), paralelismo, cache |
 | `resources/db/migration` | Schema do banco próprio (Flyway) |
@@ -50,6 +51,9 @@ migration que atualize as linhas antigas (a coluna guarda o nome do enum).
 **Documentos para monitores/impressoras.** Inclua o itemtype do GLPI em `DocumentoServico.TIPOS` e use o mesmo
 componente `documentos.ts` na tela nova, trocando `'Computer'` pelo tipo.
 
+**Novo modelo de termo.** Coloque o HTML em `Model Termos Eqp/`, acrescente em `TermoServico.Modelo` (id da URL →
+arquivo) e diga em `TermoServico.campos` quais rótulos preencher. Na tela, um botão a mais em `documentos.ts`.
+
 **Mudar o schema.** Só por migration Flyway nova (`V2__...sql`), em SQL portável: os testes e o perfil local
 usam H2 no modo PostgreSQL.
 
@@ -72,6 +76,10 @@ usam H2 no modo PostgreSQL.
   prioridade). Deixe comentado o que não tiver valor.
 - **Nesta máquina:** a JVM precisa de `-Djdk.net.unixdomain.tmpdir=<pasta sem ~>` (o `.bat` já passa) e o
   `npm install` só funciona pelo espelho `--registry=https://registry.yarnpkg.com`.
+- **Termos: o preenchimento acha o campo pelo texto do rótulo** (os modelos não têm `id` nos campos), dentro da
+  seção pelo título. Se a TI renomear um rótulo ou uma seção no HTML, aquele campo deixa de vir preenchido (o termo
+  continua funcionando). Ajuste o texto em `TermoServico.campos`. Os dados vão no script como JSON escapado
+  (`jsonParaScript`): um nome com `</script>` vindo do GLPI não pode fechar o script.
 - **O simulador não é o GLPI.** Ele imita o formato que esperamos do GLPI 10. Comportamento novo precisa ser
   conferido também contra o GLPI real.
 

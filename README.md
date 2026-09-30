@@ -50,6 +50,9 @@ As portas (4300 e 8091) são diferentes das do HELP-AGENT (80 e 8080), que roda 
 - **Documentos e termos:** arraste o arquivo, escolha o tipo (termo de responsabilidade, nota fiscal, laudo…) e
   anexe. O termo registra o responsável da época. Remover pede motivo e o arquivo continua guardado
   ("Mostrar removidos"). Os documentos que já estavam no GLPI aparecem embaixo, só para abrir.
+- **Gerar termo:** em "Documentos e termos", os botões **Movimentação** e **Substituição** abrem o modelo da TI
+  (pasta `Model Termos Eqp`) já preenchido com a máquina. Complete cargo, setor e chamado, imprima pelo botão do
+  próprio modelo, colha a assinatura e anexe o termo assinado na ficha.
 
 ## Onde ficam os dados
 

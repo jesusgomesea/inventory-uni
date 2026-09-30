@@ -18,7 +18,7 @@ class RegraDiscoTest {
             new InventarioPropriedades.Discos(
                     List.of("SSD", "NVME", "\\bSA400", "\\bWDS[0-9]", "\\bCT[0-9]+(BX|MX|P[0-9])"),
                     List.of("\\bST[0-9]{3,}", "\\bWDC WD[0-9]", "\\bTOSHIBA (DT|MQ|HDW|MG)")),
-            null, null));
+            null, null, null));
 
     @Test
     void tipoInformadoNoGlpiVenceONome() {

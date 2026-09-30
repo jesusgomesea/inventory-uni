@@ -26,6 +26,14 @@ const LIMITE_BYTES = 50 * 1024 * 1024;
       <div class="card-header"><span class="card-num">{{ ativos() }}</span><h2 id="t-docs">Documentos e termos</h2>
         <span class="card-sub">guardados nesta aplicação</span></div>
       <div class="card-body">
+        <div class="termos-gerar">
+          <span class="rotulo-secao">Gerar termo para imprimir</span>
+          <a class="btn-acao" [href]="api.urlTermo(ficha().id, 'movimentacao')" target="_blank" rel="noopener"
+            title="Recebimento, devolução, empréstimo ou transferência"><inv-icone nome="termo" [tamanho]="14" /> Movimentação</a>
+          <a class="btn-acao" [href]="api.urlTermo(ficha().id, 'substituicao')" target="_blank" rel="noopener"
+            title="Esta máquina entra como o equipamento antigo"><inv-icone nome="termo" [tamanho]="14" /> Substituição</a>
+          <small>Abre o modelo da TI já preenchido com esta máquina. Depois de assinado, anexe aqui embaixo.</small>
+        </div>
         @if (!arquivo()) {
           <label class="zona-envio" [class.arrastando]="arrastando()"
             (dragover)="$event.preventDefault(); arrastando.set(true)" (dragleave)="arrastando.set(false)" (drop)="soltou($event)">

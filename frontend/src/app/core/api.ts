@@ -90,6 +90,11 @@ export class Api {
     return this.http.post<DocumentoLocal>(`/api/equipamentos/${tipo}/${itemId}/documentos`, dados);
   }
 
+  /** Termo da TI (pasta "Model Termos Eqp") já preenchido com a ficha; abre numa aba nova para imprimir. */
+  urlTermo(computadorId: number, modelo: 'movimentacao' | 'substituicao'): string {
+    return `/api/computadores/${computadorId}/termos/${modelo}`;
+  }
+
   urlDocumento(id: number): string {
     return `/api/documentos/${id}/arquivo`;
   }

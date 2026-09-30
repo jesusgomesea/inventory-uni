@@ -366,6 +366,10 @@ a { color: var(--primaria); }
 .selo-categoria { display: inline-block; margin-right: 8px; padding: 1px 8px; border-radius: var(--radius-sm); background: var(--primaria); color: #fff;
   font-size: 10px; font-weight: 700; letter-spacing: var(--rd-tracking-wider); text-transform: uppercase; vertical-align: 1px;
   &.glpi { background: var(--cinza-coroa); } }
+.termos-gerar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  .rotulo-secao { margin: 0 6px 0 0; } .btn-acao { text-decoration: none; }
+  small { flex-basis: 100%; font-size: 12px; color: var(--muted); } }
 .zona-envio { position: relative; display: grid; place-items: center; gap: 6px; padding: 22px; margin-bottom: 16px; text-align: center; cursor: pointer;
   border: 1.5px dashed var(--border2); border-radius: var(--radius-lg); background: var(--bg-alt); color: var(--text2); font-size: 13.5px;
   letter-spacing: normal; text-transform: none; font-weight: 400;
