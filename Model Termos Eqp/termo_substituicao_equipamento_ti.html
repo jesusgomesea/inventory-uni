@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Termo de Substituicao de Equipamento de TI - R Damasio</title>
+<style>
+  :root{
+    --azul: #1E3A8A;
+    --azul-claro: #EFF4FB;
+    --cinza: #475569;
+    --cinza-claro: #F1F5F9;
+    --borda: #CBD5E1;
+    --texto: #1E293B;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    color: var(--texto);
+    background:#e9edf2;
+    margin:0;
+    padding:24px;
+  }
+  .page{
+    max-width:850px;
+    margin:0 auto;
+    background:#fff;
+    padding:40px 48px;
+    border-radius:6px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.12);
+  }
+  .toolbar{
+    max-width:850px;
+    margin:0 auto 16px auto;
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+  }
+  .toolbar button{
+    background:var(--azul);
+    color:#fff;
+    border:none;
+    padding:10px 18px;
+    font-size:14px;
+    border-radius:5px;
+    cursor:pointer;
+    font-weight:600;
+  }
+  .toolbar button.secondary{
+    background:#fff;
+    color:var(--azul);
+    border:1px solid var(--azul);
+  }
+  .toolbar button:hover{ opacity:0.9; }
+
+  header{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    border-bottom:3px solid var(--azul);
+    padding-bottom:16px;
+    margin-bottom:22px;
+  }
+  header .titulos{ flex:1; }
+  header h1{
+    font-size:18px;
+    margin:0 0 4px 0;
+    color:var(--azul);
+    letter-spacing:0.3px;
+  }
+  header p{
+    margin:0;
+    font-size:12px;
+    color:var(--cinza);
+  }
+  .doc-code{
+    font-size:11px;
+    color:var(--cinza);
+    text-align:right;
+  }
+  .doc-code input{
+    width:100px;border:1px solid var(--borda);border-radius:4px;padding:4px 6px;font-size:11px;
+  }
+
+  section{ margin-bottom:22px; }
+  section h2{
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:#fff;
+    background:var(--cinza);
+    padding:7px 12px;
+    border-radius:4px;
+    margin:0 0 14px 0;
+  }
+  .bloco-antigo h2{ background:#9C4221; }
+  .bloco-novo h2{ background:#0F6E5E; }
+
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px 18px;
+  }
+  .grid.cols-3{ grid-template-columns:1fr 1fr 1fr; }
+  .full{ grid-column:1 / -1; }
+
+  .campo label{
+    display:block;
+    font-size:11.5px;
+    font-weight:600;
+    color:var(--cinza);
+    margin-bottom:4px;
+  }
+  .campo input[type=text],
+  .campo input[type=date],
+  .campo select,
+  .campo textarea{
+    width:100%;
+    padding:8px 10px;
+    font-size:13.5px;
+    border:1px solid var(--borda);
+    border-radius:4px;
+    background:var(--cinza-claro);
+    color:var(--texto);
+    font-family:inherit;
+  }
+  .campo textarea{ resize:vertical; min-height:60px; }
+  .campo input:focus, .campo select:focus, .campo textarea:focus{
+    outline:2px solid var(--azul);
+    background:#fff;
+  }
+
+  .radio-row{
+    display:flex;
+    gap:20px;
+    padding:8px 2px 2px 2px;
+  }
+  .radio-row label{
+    font-size:13px;
+    font-weight:500;
+    color:var(--texto);
+    display:flex;
+    align-items:center;
+    gap:6px;
+    cursor:pointer;
+  }
+
+  .card-equip{
+    border:1px solid var(--borda);
+    border-radius:6px;
+    padding:16px;
+    background:#FAFBFC;
+  }
+  .bloco-antigo .card-equip{ border-left:3px solid #9C4221; }
+  .bloco-novo .card-equip{ border-left:3px solid #0F6E5E; }
+
+  .declaracao{
+    font-size:12px;
+    color:var(--cinza);
+    line-height:1.6;
+    background:var(--azul-claro);
+    border-left:3px solid var(--azul);
+    padding:12px 14px;
+    border-radius:4px;
+  }
+
+  .data-local{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    align-items:center;
+    margin-top:26px;
+    font-size:13px;
+  }
+  .data-local input{
+    padding:7px 10px;
+    border:1px solid var(--borda);
+    border-radius:4px;
+    background:var(--cinza-claro);
+    font-family:inherit;
+    font-size:13px;
+  }
+  .data-local button{
+    padding:6px 10px;font-size:12px;background:#fff;color:var(--azul);border:1px solid var(--azul);border-radius:4px;cursor:pointer;
+  }
+
+  .assinaturas{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:30px;
+    margin-top:36px;
+  }
+  .assinatura{
+    text-align:center;
+  }
+  .assinatura .linha{
+    border-top:1px solid var(--texto);
+    margin-top:48px;
+    padding-top:6px;
+    font-size:12.5px;
+    font-weight:600;
+  }
+  .assinatura .cargo{
+    font-size:11px;
+    color:var(--cinza);
+  }
+
+  footer.rodape{
+    margin-top:30px;
+    padding-top:12px;
+    border-top:1px solid var(--borda);
+    font-size:10px;
+    color:#94A3B8;
+    text-align:center;
+  }
+
+  @media print{
+    body{ background:#fff; padding:0; }
+    .toolbar{ display:none; }
+    .page{ box-shadow:none; padding:18px 26px; max-width:100%; }
+    .campo input, .campo select, .campo textarea{
+      background:#fff;
+      border:1px solid #94A3B8;
+    }
+    input::placeholder, textarea::placeholder{
+      color:transparent !important;
+      opacity:0 !important;
+    }
+    input::-webkit-input-placeholder, textarea::-webkit-input-placeholder{ color:transparent !important; }
+    input::-moz-placeholder, textarea::-moz-placeholder{ color:transparent !important; opacity:0 !important; }
+    section h2{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    @page{ margin:14mm; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button type="button" class="secondary" onclick="limparFormulario()">Limpar</button>
+  <button type="button" onclick="window.print()">Imprimir / Salvar PDF</button>
+</div>
+
+<div class="page" id="documento">
+
+  <header>
+    <div class="titulos">
+      <h1>TERMO DE SUBSTITUICAO DE EQUIPAMENTO DE TI</h1>
+      <p>R Damasio &middot; Departamento de Tecnologia da Informacao</p>
+    </div>
+    <div class="doc-code">
+      No do Termo: <input type="text" placeholder="ex: 2026-001"><br><br>
+      Chamado GLPI: <input type="text" placeholder="ex: 12345">
+    </div>
+  </header>
+
+  <section>
+    <h2>1. Dados do Colaborador</h2>
+    <div class="grid">
+      <div class="campo">
+        <label>Nome do Colaborador</label>
+        <input type="text" placeholder="Nome completo">
+      </div>
+      <div class="campo">
+        <label>Cargo</label>
+        <input type="text" placeholder="Cargo/Funcao">
+      </div>
+      <div class="campo">
+        <label>Loja / Unidade (codigo - nome)</label>
+        <input type="text" placeholder="codigo - nome da unidade">
+      </div>
+      <div class="campo">
+        <label>Departamento / Setor</label>
+        <input type="text" placeholder="Ex: Financeiro, Vendas, TI...">
+      </div>
+    </div>
+  </section>
+
+  <section class="bloco-antigo">
+    <h2>2. Equipamento Substituido (Antigo)</h2>
+    <div class="card-equip">
+      <div class="grid cols-3">
+        <div class="campo">
+          <label>Tipo de Equipamento</label>
+          <select>
+            <option value="">Selecione...</option>
+            <option>Notebook</option>
+            <option>Desktop</option>
+            <option>Monitor</option>
+            <option>Impressora</option>
+            <option>Leitor de Codigo de Barras</option>
+            <option>Coletor de Dados</option>
+            <option>Celular / Smartphone</option>
+            <option>Nobreak</option>
+            <option>Periferico (mouse/teclado)</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label>Marca / Modelo</label>
+          <input type="text" placeholder="Se possivel">
+        </div>
+        <div class="campo">
+          <label>No de Serie (S/N)</label>
+          <input type="text" placeholder="S/N do fabricante">
+        </div>
+        <div class="campo">
+          <label>No de Patrimonio</label>
+          <input type="text" placeholder="Etiqueta de patrimonio interno">
+        </div>
+        <div class="campo">
+          <label>Condicao / Estado Atual</label>
+          <div class="radio-row">
+            <label><input type="radio" name="condicaoAntigo"> Defeito</label>
+            <label><input type="radio" name="condicaoAntigo"> Obsoleto</label>
+            <label><input type="radio" name="condicaoAntigo"> Danificado</label>
+          </div>
+        </div>
+        <div class="campo">
+          <label>Destino do Equipamento Antigo</label>
+          <select>
+            <option value="">Selecione...</option>
+            <option>Descarte / Sucateamento</option>
+            <option>Manutencao / Conserto</option>
+            <option>Estoque de TI</option>
+            <option>Devolucao ao Fornecedor</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="campo full">
+          <label>Descricao do Problema / Motivo da Substituicao</label>
+          <textarea placeholder="Descreva o defeito, obsolescencia ou motivo que levou a substituicao"></textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloco-novo">
+    <h2>3. Equipamento Novo (Substituto)</h2>
+    <div class="card-equip">
+      <div class="grid cols-3">
+        <div class="campo">
+          <label>Tipo de Equipamento</label>
+          <select>
+            <option value="">Selecione...</option>
+            <option>Notebook</option>
+            <option>Desktop</option>
+            <option>Monitor</option>
+            <option>Impressora</option>
+            <option>Leitor de Codigo de Barras</option>
+            <option>Coletor de Dados</option>
+            <option>Celular / Smartphone</option>
+            <option>Nobreak</option>
+            <option>Periferico (mouse/teclado)</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label>Marca / Modelo</label>
+          <input type="text" placeholder="Se possivel">
+        </div>
+        <div class="campo">
+          <label>No de Serie (S/N)</label>
+          <input type="text" placeholder="S/N do fabricante">
+        </div>
+        <div class="campo">
+          <label>No de Patrimonio</label>
+          <input type="text" placeholder="Etiqueta de patrimonio interno">
+        </div>
+        <div class="campo">
+          <label>Condicao do Equipamento</label>
+          <div class="radio-row">
+            <label><input type="radio" name="condicaoNovo"> Novo</label>
+            <label><input type="radio" name="condicaoNovo"> Usado</label>
+          </div>
+        </div>
+        <div class="campo">
+          <label>Origem do Equipamento Novo</label>
+          <select>
+            <option value="">Selecione...</option>
+            <option>Compra</option>
+            <option>Estoque de TI</option>
+            <option>Realocacao de outra unidade/colaborador</option>
+            <option>Garantia / Reposicao do Fornecedor</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="campo full">
+          <label>Acessorios que Acompanham</label>
+          <div class="radio-row" style="flex-wrap:wrap;gap:14px;">
+            <label><input type="checkbox"> Carregador</label>
+            <label><input type="checkbox"> Mochila/Case</label>
+            <label><input type="checkbox"> Mouse</label>
+            <label><input type="checkbox"> Cabo de rede</label>
+            <label><input type="checkbox"> Fonte</label>
+            <label><input type="checkbox"> Cabo de video (HDMI/VGA)</label>
+          </div>
+          <input type="text" placeholder="Outros itens nao listados" style="margin-top:8px;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. Observacoes</h2>
+    <div class="campo">
+      <label>Observacoes Gerais</label>
+      <textarea placeholder="Configuracoes migradas, dados transferidos, pendencias, etc."></textarea>
+    </div>
+  </section>
+
+  <section>
+    <div class="declaracao">
+      Declaro para os devidos fins que as informacoes acima sao verdadeiras e que o equipamento antigo descrito
+      foi <strong>recolhido</strong> e substituido pelo equipamento novo descrito neste termo, o qual passa a ser
+      de responsabilidade do colaborador acima identificado. O colaborador se compromete a zelar pela guarda e
+      bom uso do novo equipamento, respondendo por danos causados por mau uso, negligencia ou extravio, conforme
+      politicas internas da R Damasio.
+    </div>
+  </section>
+
+  <div class="data-local">
+    <label>Local:</label>
+    <input type="text" placeholder="Cidade/Unidade" style="width:160px;">
+    <label>Data:</label>
+    <input type="date" id="campoData" style="width:150px;">
+    <button type="button" onclick="document.getElementById('campoData').valueAsDate = new Date();">Hoje</button>
+  </div>
+
+  <div class="assinaturas">
+    <div class="assinatura">
+      <div class="linha">Assinatura do Tecnico (TI)</div>
+      <div class="cargo">Responsavel pela substituicao do equipamento</div>
+    </div>
+    <div class="assinatura">
+      <div class="linha">Assinatura do Colaborador</div>
+      <div class="cargo">Responsavel pela guarda e uso do novo equipamento</div>
+    </div>
+  </div>
+
+  <footer class="rodape">
+    R Damasio &middot; Termo de Substituicao de Equipamento de TI &middot; Documento gerado eletronicamente
+  </footer>
+
+</div>
+
+<script>
+function limparFormulario(){
+  const doc = document.getElementById('documento');
+  doc.querySelectorAll('input[type=text], input[type=date], textarea').forEach(el => el.value = '');
+  doc.querySelectorAll('select').forEach(el => el.selectedIndex = 0);
+  doc.querySelectorAll('input[type=radio], input[type=checkbox]').forEach(el => el.checked = false);
+}
+</script>
+
+</body>
+</html>

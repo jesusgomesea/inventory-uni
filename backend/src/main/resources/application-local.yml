@@ -1,0 +1,24 @@
+# Perfil "local": roda nesta máquina sem PostgreSQL (H2 em arquivo em ./dados). É o perfil do iniciar-inventario.bat.
+# O App-Token e o endereço do GLPI vêm de backend/config/application-local.yml (fora do git).
+spring:
+  datasource:
+    url: jdbc:h2:file:./dados/inventario-local;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    username: sa
+    password: ""
+
+# O backend só atende a própria máquina; quem está na rede entra pelo proxy do frontend.
+server:
+  address: 127.0.0.1
+
+logging:
+  file:
+    name: ./dados/logs/inventario.log
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 14
+
+management:
+  endpoint:
+    health:
+      show-details: always

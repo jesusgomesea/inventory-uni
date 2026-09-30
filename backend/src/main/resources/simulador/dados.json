@@ -1,0 +1,152 @@
+{
+  "_comentario": "Dados fictícios do simulador do GLPI (perfil simulador). Formato próximo do que a API legada do GLPI 10 devolve. Login: tecnico / tecnico, ou token pessoal token-tecnico.",
+  "usuarios": [
+    { "id": 2, "name": "tecnico", "senha": "tecnico", "firstname": "Técnico", "realname": "Demonstração", "perfil": "Technician", "is_active": 1 },
+    { "id": 7, "name": "maria.souza", "firstname": "Maria", "realname": "Souza", "is_active": 1 },
+    { "id": 8, "name": "joao.lima", "firstname": "João", "realname": "Lima", "is_active": 1 },
+    { "id": 9, "name": "ana.costa", "firstname": "Ana", "realname": "Costa", "is_active": 1 },
+    { "id": 10, "name": "carlos.melo", "firstname": "Carlos", "realname": "Melo", "is_active": 1 },
+    { "id": 11, "name": "paula.reis", "firstname": "Paula", "realname": "Reis", "is_active": 0 }
+  ],
+  "locais": [
+    { "id": 1, "name": "Matriz", "completename": "Matriz" },
+    { "id": 2, "name": "TI", "completename": "Matriz > TI" },
+    { "id": 3, "name": "Financeiro", "completename": "Matriz > Financeiro" },
+    { "id": 4, "name": "Loja 14", "completename": "Loja 14" },
+    { "id": 5, "name": "Balcão", "completename": "Loja 14 > Balcão" },
+    { "id": 6, "name": "Loja 22", "completename": "Loja 22" }
+  ],
+  "status": [
+    { "id": 1, "name": "Em uso", "completename": "Em uso", "is_visible_computer": 1 },
+    { "id": 2, "name": "Estoque", "completename": "Estoque", "is_visible_computer": 1 },
+    { "id": 3, "name": "Manutenção", "completename": "Manutenção", "is_visible_computer": 1 },
+    { "id": 4, "name": "Descartado", "completename": "Descartado", "is_visible_computer": 1 },
+    { "id": 5, "name": "Só telefonia", "completename": "Só telefonia", "is_visible_computer": 0 }
+  ],
+  "grupos": [
+    { "id": 1, "name": "Suporte N1", "completename": "Suporte N1", "is_assign": 1 },
+    { "id": 2, "name": "Infraestrutura", "completename": "Infraestrutura", "is_assign": 1 },
+    { "id": 3, "name": "Diretoria", "completename": "Diretoria", "is_assign": 0 }
+  ],
+  "pecas": {
+    "DeviceMemory": [
+      { "id": 1, "designation": "DDR4 2666 Kingston", "frequence": "2666", "devicememorytypes_id": "DDR4", "manufacturers_id": "Kingston", "size_default": 8192 },
+      { "id": 2, "designation": "DDR3 1600", "frequence": "1600", "devicememorytypes_id": "DDR3", "manufacturers_id": "Samsung", "size_default": 4096 },
+      { "id": 3, "designation": "DDR4 3200 SODIMM", "frequence": "3200", "devicememorytypes_id": "DDR4", "manufacturers_id": "SK Hynix", "size_default": 8192 }
+    ],
+    "DeviceHardDrive": [
+      { "id": 1, "designation": "KINGSTON SA400S37240G", "capacity_default": 228936, "interfacetypes_id": "SATA", "manufacturers_id": "Kingston", "rpm": 0 },
+      { "id": 2, "designation": "ST1000DM010-2EP102", "capacity_default": 953869, "interfacetypes_id": "SATA", "manufacturers_id": "Seagate", "rpm": 0 },
+      { "id": 3, "designation": "Samsung SSD 980 500GB", "capacity_default": 476940, "interfacetypes_id": "NVMe", "manufacturers_id": "Samsung", "rpm": 0 },
+      { "id": 4, "designation": "Disco genérico ATA", "capacity_default": 476940, "interfacetypes_id": "SATA", "manufacturers_id": null, "rpm": 0 }
+    ],
+    "DeviceProcessor": [
+      { "id": 1, "designation": "Intel(R) Core(TM) i5-10500 CPU @ 3.10GHz", "frequence": "3100", "nbcores_default": 6, "nbthreads_default": 12, "manufacturers_id": "Intel" },
+      { "id": 2, "designation": "Intel(R) Core(TM) i3-4160 CPU @ 3.60GHz", "frequence": "3600", "nbcores_default": 2, "nbthreads_default": 4, "manufacturers_id": "Intel" }
+    ],
+    "DeviceGraphicCard": [
+      { "id": 1, "designation": "Intel(R) UHD Graphics 630", "memory_default": 1024, "chipset": "Intel UHD", "manufacturers_id": "Intel" }
+    ],
+    "DeviceFirmware": [
+      { "id": 1, "designation": "BIOS Dell", "version": "1.21.0", "date": "2024-03-12", "manufacturers_id": "Dell Inc." }
+    ]
+  },
+  "monitores": [
+    { "id": 31, "name": "MON-LJ014-CX02", "monitormodels_id": "Dell P2219H", "serial": "CN0H7X3T" }
+  ],
+  "computadores": [
+    {
+      "id": 101, "name": "RD-LJ014-CX02", "comment": "Computador do caixa 2, balcão de peças",
+      "states_id": 1, "users_id": 7, "users_id_tech": 2, "groups_id_tech": 1, "locations_id": 5,
+      "contact": "maria.souza", "serial": "7XK2Q93", "otherserial": "PAT-00412", "uuid": "4C4C4544-0058-4B10-8032-B7C04F513933",
+      "manufacturers_id": "Dell Inc.", "computermodels_id": "OptiPlex 3080", "computertypes_id": "Desktop",
+      "is_dynamic": 1, "date_creation": "2024-02-19 10:21:03", "date_mod": "2026-09-30 08:12:03",
+      "last_inventory_update": "2026-09-30 08:12:03", "last_boot": "2026-09-30 07:41:55",
+      "memorias": [ { "busID": "1", "size": 8192, "devicememories_id": 1, "serial": "A1B2C3D4" }, { "busID": "2", "size": 8192, "devicememories_id": 1, "serial": "A1B2C3D5" } ],
+      "discos": [ { "capacity": 228936, "deviceharddrives_id": 1, "serial": "50026B7784A1C2F3" } ],
+      "so": { "operatingsystems_id": "Microsoft Windows 11 Pro", "operatingsystemversions_id": "23H2", "operatingsystemeditions_id": "Professional", "operatingsystemarchitectures_id": "64-bit", "operatingsystemkernelversions_id": "10.0.22631" },
+      "volumes": [ { "name": "C:", "mountpoint": "C:", "totalsize": 228000, "freesize": 66120, "filesystems_id": "NTFS" } ],
+      "processadores": [ { "deviceprocessors_id": 1, "frequency": 3100, "nbcores": 6, "nbthreads": 12 } ],
+      "video": [ { "devicegraphiccards_id": 1, "memory": 1024 } ],
+      "firmware": [ { "devicefirmwares_id": 1 } ],
+      "portas": { "NetworkPortEthernet": [ { "name": "Ethernet", "mac": "b0:7b:25:1a:9c:02", "NetworkName": { "name": "rd-lj014-cx02", "IPAddress": [ { "name": "10.14.2.32" }, { "name": "fe80::2d1c:1a4f:9b7e:1102" } ] } } ],
+                  "NetworkPortLocal": [ { "name": "lo", "mac": "", "NetworkName": { "IPAddress": [ { "name": "127.0.0.1" } ] } } ] },
+      "softwares": [ ["Google Chrome", "129.0.6668.90"], ["Microsoft Edge", "129.0.2792.65"], ["AnyDesk", "8.0.14"], ["Adobe Acrobat Reader", "24.003.20112"], ["Microsoft 365 Apps", "16.0.17928"], ["GLPI Agent", "1.10"] ],
+      "antivirus": [ { "name": "Microsoft Defender Antivirus", "antivirus_version": "4.18.24080.9", "signature_version": "1.419.216.0", "is_active": 1, "is_uptodate": 1, "date_expiration": null } ],
+      "conectados": [ { "itemtype": "Monitor", "items_id": 31 } ],
+      "infocom": { "buy_date": "2024-02-10", "use_date": "2024-02-19", "warranty_date": "2024-02-10", "warranty_duration": 36, "value": "4890.0000", "suppliers_id": "Dell Computadores do Brasil", "order_number": "PC-2024-0113", "bill": "NF 4412" },
+      "tickets": [ { "id": 5521, "name": "Caixa 2 lento ao abrir o sistema", "status": 6, "date": "2026-07-14 09:10:00" }, { "id": 6013, "name": "Troca de teclado", "status": 2, "date": "2026-09-22 15:40:00" } ],
+      "documentos": [ { "id": 901, "name": "Termo de responsabilidade — Maria Souza", "filename": "termo-maria-souza.pdf", "mime": "application/pdf", "headings": "Termos", "link": null, "assocdate": "2024-02-19 11:00:00" } ]
+    },
+    {
+      "id": 102, "name": "RD-MTZ-FIN-01", "comment": "Financeiro, contas a pagar",
+      "states_id": 1, "users_id": 8, "users_id_tech": 2, "groups_id_tech": 2, "locations_id": 3,
+      "contact": "joao.lima", "serial": "BRJ4431X9", "otherserial": "PAT-00188", "uuid": "8A1F2C11-7E2B-4E1A-9C2D-11AA33BB44CC",
+      "manufacturers_id": "Lenovo", "computermodels_id": "ThinkCentre M70q", "computertypes_id": "Mini PC",
+      "is_dynamic": 1, "date_creation": "2023-05-02 14:00:00", "date_mod": "2026-09-29 18:02:44",
+      "last_inventory_update": "2026-09-29 18:02:44", "last_boot": "2026-09-29 08:03:10",
+      "memorias": [ { "busID": "0", "size": 8192, "devicememories_id": 3, "serial": "HX-889012" } ],
+      "discos": [ { "capacity": 476940, "deviceharddrives_id": 3, "serial": "S64DNX0T123456" } ],
+      "so": { "operatingsystems_id": "Microsoft Windows 10 Pro", "operatingsystemversions_id": "22H2", "operatingsystemeditions_id": "Professional", "operatingsystemarchitectures_id": "64-bit", "operatingsystemkernelversions_id": "10.0.19045" },
+      "volumes": [ { "name": "C:", "mountpoint": "C:", "totalsize": 475000, "freesize": 301000, "filesystems_id": "NTFS" } ],
+      "processadores": [ { "deviceprocessors_id": 1, "frequency": 3100, "nbcores": 6, "nbthreads": 12 } ],
+      "portas": { "NetworkPortEthernet": [ { "name": "Ethernet", "mac": "8c:16:45:aa:10:77", "NetworkName": { "name": "rd-mtz-fin-01", "IPAddress": [ { "name": "10.0.3.41" } ] } } ] },
+      "softwares": [ ["Google Chrome", "129.0.6668.90"], ["Sistema ERP Cliente", "5.2"] ],
+      "antivirus": [],
+      "tickets": [],
+      "documentos": []
+    },
+    {
+      "id": 103, "name": "RD-LJ022-GER", "comment": "Gerência da loja 22 — candidato a upgrade (HDD e 4 GB)",
+      "states_id": 1, "users_id": 9, "users_id_tech": 0, "groups_id_tech": 1, "locations_id": 6,
+      "contact": "ana.costa", "serial": "MXL5061ABC", "otherserial": "", "uuid": "",
+      "manufacturers_id": "HP", "computermodels_id": "ProDesk 400 G1", "computertypes_id": "Desktop",
+      "is_dynamic": 1, "date_creation": "2019-08-12 09:00:00", "date_mod": "2026-09-28 10:30:00",
+      "last_inventory_update": "2026-09-28 10:30:00", "last_boot": "2026-09-28 07:58:00",
+      "memorias": [ { "busID": "1", "size": 4096, "devicememories_id": 2, "serial": "" } ],
+      "discos": [ { "capacity": 953869, "deviceharddrives_id": 2, "serial": "ZN1A2B3C" } ],
+      "so": { "operatingsystems_id": "Microsoft Windows 10 Pro", "operatingsystemversions_id": "21H2", "operatingsystemeditions_id": "Professional", "operatingsystemarchitectures_id": "64-bit", "operatingsystemkernelversions_id": "10.0.19044" },
+      "volumes": [ { "name": "C:", "mountpoint": "C:", "totalsize": 953000, "freesize": 120500, "filesystems_id": "NTFS" } ],
+      "processadores": [ { "deviceprocessors_id": 2, "frequency": 3600, "nbcores": 2, "nbthreads": 4 } ],
+      "portas": { "NetworkPortEthernet": [ { "name": "Ethernet", "mac": "3c:52:82:01:02:03", "NetworkName": { "name": "rd-lj022-ger", "IPAddress": [ { "name": "10.22.1.10" } ] } } ] },
+      "softwares": [ ["Google Chrome", "118.0"], ["AnyDesk", "7.1"] ],
+      "antivirus": [ { "name": "Microsoft Defender Antivirus", "antivirus_version": "4.18.2305", "signature_version": "1.391.0.0", "is_active": 1, "is_uptodate": 0, "date_expiration": null } ],
+      "tickets": [ { "id": 6100, "name": "Máquina travando — pedir upgrade", "status": 4, "date": "2026-09-27 11:00:00" } ],
+      "documentos": []
+    },
+    {
+      "id": 104, "name": "RD-MTZ-TI-NOTE03", "comment": "Notebook reserva da TI",
+      "states_id": 2, "users_id": 0, "users_id_tech": 2, "groups_id_tech": 2, "locations_id": 2,
+      "contact": "tecnico", "serial": "PF3ABCD1", "otherserial": "PAT-00533", "uuid": "",
+      "manufacturers_id": "Lenovo", "computermodels_id": "ThinkPad E14 Gen 4", "computertypes_id": "Notebook",
+      "is_dynamic": 1, "date_creation": "2025-01-10 10:00:00", "date_mod": "2026-09-15 16:20:00",
+      "last_inventory_update": "2026-09-15 16:20:00", "last_boot": "2026-09-15 16:00:00",
+      "memorias": [ { "busID": "ChannelA-DIMM0", "size": 8192, "devicememories_id": 3, "serial": "" }, { "busID": "ChannelB-DIMM0", "size": 8192, "devicememories_id": 3, "serial": "" } ],
+      "discos": [ { "capacity": 476940, "deviceharddrives_id": 4, "serial": "" } ],
+      "so": { "operatingsystems_id": "Microsoft Windows 11 Pro", "operatingsystemversions_id": "24H2", "operatingsystemeditions_id": "Professional", "operatingsystemarchitectures_id": "64-bit", "operatingsystemkernelversions_id": "10.0.26100" },
+      "volumes": [ { "name": "C:", "mountpoint": "C:", "totalsize": 476000, "freesize": 402000, "filesystems_id": "NTFS" } ],
+      "portas": { "NetworkPortWifi": [ { "name": "Wi-Fi", "mac": "a4:c3:f0:11:22:33", "NetworkName": { "name": "rd-mtz-ti-note03", "IPAddress": [ { "name": "169.254.10.4" }, { "name": "10.0.2.77" } ] } } ] },
+      "softwares": [],
+      "antivirus": [],
+      "tickets": [],
+      "documentos": []
+    },
+    {
+      "id": 105, "name": "RD-LJ014-CX01", "comment": "Caixa 1",
+      "states_id": 3, "users_id": 10, "users_id_tech": 2, "groups_id_tech": 1, "locations_id": 5,
+      "contact": "carlos.melo", "serial": "7XK2Q88", "otherserial": "PAT-00411", "uuid": "",
+      "manufacturers_id": "Dell Inc.", "computermodels_id": "OptiPlex 3080", "computertypes_id": "Desktop",
+      "is_dynamic": 1, "date_creation": "2024-02-19 10:20:00", "date_mod": "2026-09-25 09:00:00",
+      "last_inventory_update": "2026-09-20 08:00:00", "last_boot": "2026-09-20 07:40:00",
+      "memorias": [ { "busID": "1", "size": 8192, "devicememories_id": 1, "serial": "" } ],
+      "discos": [ { "capacity": 228936, "deviceharddrives_id": 1, "serial": "" } ],
+      "so": { "operatingsystems_id": "Microsoft Windows 11 Pro", "operatingsystemversions_id": "23H2", "operatingsystemeditions_id": "Professional", "operatingsystemarchitectures_id": "64-bit", "operatingsystemkernelversions_id": "10.0.22631" },
+      "volumes": [ { "name": "C:", "mountpoint": "C:", "totalsize": 228000, "freesize": 190000, "filesystems_id": "NTFS" } ],
+      "portas": { "NetworkPortEthernet": [ { "name": "Ethernet", "mac": "b0:7b:25:1a:9c:01", "NetworkName": { "name": "rd-lj014-cx01", "IPAddress": [ { "name": "10.14.2.31" } ] } } ] },
+      "softwares": [],
+      "antivirus": [],
+      "tickets": [ { "id": 6120, "name": "Fonte queimada — caixa 1", "status": 2, "date": "2026-09-25 08:50:00" } ],
+      "documentos": []
+    }
+  ]
+}

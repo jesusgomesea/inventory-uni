@@ -1,0 +1,16 @@
+# Perfil "simulador": a aplicação conversa com um GLPI de mentira servido por ela mesma
+# (simulador/SimuladorGlpi, dados em simulador/dados.json). Para demonstração e testes da tela.
+# Uso: iniciar-inventario.bat simulador   (ou -Dspring-boot.run.profiles=local,simulador)
+# Login: tecnico / tecnico
+inventario:
+  glpi:
+    url: http://127.0.0.1:${server.port}/simulador-glpi/apirest.php
+    app-token: simulador
+    url-web: http://127.0.0.1:${server.port}/simulador-glpi
+  documentos:
+    pasta: ./dados/simulador/documentos
+
+spring:
+  datasource:
+    # banco separado: documentos de teste não se misturam com os reais
+    url: jdbc:h2:file:./dados/simulador/inventario-simulador;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH

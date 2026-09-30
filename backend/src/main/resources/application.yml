@@ -1,0 +1,94 @@
+# Inventário GLPI — configuração padrão (servidor). Segredos NUNCA aqui: ver backend/config/ (fora do git).
+spring:
+  application:
+    name: inventario
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/inventario}
+    username: ${DB_USER:inventario}
+    password: ${DB_PASSWORD:inventario}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate # o schema é das migrations Flyway (db/migration), nunca do Hibernate
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 55MB
+  threads:
+    virtual:
+      enabled: true # chamadas ao GLPI esperam rede: threads virtuais não prendem o servidor
+
+server:
+  port: ${PORT:8091}
+  servlet:
+    session:
+      timeout: 10h # um turno de trabalho; o GLPI pode encerrar antes (aí a tela pede login de novo)
+      cookie:
+        name: INVENTARIO_SESSAO # nome próprio: não colide com o cookie de outra aplicação no mesmo servidor
+        http-only: true
+        same-site: lax # parte da proteção contra CSRF (ver sessao/FiltroOrigem)
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+logging:
+  pattern:
+    level: "%5p [req=%X{req:-}]"
+
+inventario:
+  glpi:
+    url: ${GLPI_URL:}             # ex.: https://glpi.rdamasio.com.br/apirest.php
+    app-token: ${GLPI_APP_TOKEN:} # Configurar → Geral → API → cliente de API
+    url-web: ${GLPI_URL_WEB:}     # vazio = mesmo endereço da API sem /apirest.php
+    timeout: 30s
+  documentos:
+    pasta: ${DOCUMENTOS_PASTA:./dados/documentos} # entra no backup junto com o banco
+  cache-listas: 10m
+  # Regra SSD × HDD pelo nome do modelo, quando o GLPI não informa o tipo (computador/RegraDisco).
+  # Regex sem diferenciar maiúsculas, procurada em qualquer parte do nome. SSD é testado antes de HDD.
+  # Achou disco "não identificado"? Acrescente o padrão do modelo aqui e reinicie.
+  discos:
+    padroes-ssd:
+      - 'SSD'
+      - 'NVME'
+      - 'SOLID ?STATE'
+      - 'M\.2'
+      - '\bSA400'          # Kingston A400
+      - '\bSUV[0-9]'       # Kingston UV400/UV500
+      - '\bSKC[0-9]'       # Kingston KC
+      - '\bSNV[0-9S]'      # Kingston NV
+      - '\bSEDC'           # Kingston DC
+      - '\bWDS[0-9]'       # WD Green/Blue SSD (WDS240G2G0A)
+      - '\bWD (GREEN|BLUE|BLACK|RED) SN'
+      - '\bCT[0-9]+(BX|MX|P[0-9])' # Crucial BX500/MX500/P3
+      - '\bSDSSD'          # SanDisk
+      - '\bMZ-?[0-9A-Z]{4}' # Samsung OEM (MZ7LN, MZVLB)
+      - '\bSSDSC'          # Intel
+      - '\bHFS[0-9]'       # SK hynix
+      - '\bPM9[0-9]{2}'    # Samsung PM981/PM991
+      - '\bKBG[0-9]'       # Kioxia BG
+      - '\bTHNSN'          # Toshiba SSD
+      - '\bCV[0-9]-'       # Lite-On CV
+      - '\bSPCC'           # Silicon Power
+      - '\bGP-G'           # Gigabyte
+      - '\bADATA S'        # ADATA SU630/SU650
+      - '\bSU[0-9]{3}'
+    padroes-hdd:
+      - '\bST[0-9]{3,}'    # Seagate (ST1000DM010)
+      - '\bWDC WD[0-9]'    # Western Digital HDD
+      - '\bWD[0-9]{2,}[A-Z]{2}' # WD10EZEX
+      - '\bTOSHIBA (DT|MQ|HDW|MG)'
+      - '\bDT01ACA'
+      - '\bMQ0[0-9]'
+      - '\bHGST'
+      - '\bHITACHI'
+      - '\bHDS[0-9]'
+      - '\bHTS[0-9]'
+      - '\bSAMSUNG H[DNM][0-9]'
