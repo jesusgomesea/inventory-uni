@@ -12,7 +12,11 @@ guardados por equipamento. O resto (processador, softwares, garantia, chamados, 
 
 Precisa de JDK 21 e Node.js no PATH (os mesmos do HELP-AGENT).
 
-**Só para ver a tela, sem GLPI** (simulador com dados fictícios, login `tecnico` / `tecnico`):
+> **Login em espera (30/09/2026):** a tela abre direto, sem login. O backend usa uma **conta de serviço** do GLPI
+> para todos. Para religar o login de cada técnico: `inventario.login.habilitado: true` (ver
+> [docs/PROJETO.md](docs/PROJETO.md) §3).
+
+**Só para ver a tela, sem GLPI** (simulador com dados fictícios):
 
 ```bash
 iniciar-inventario.bat simulador
@@ -20,12 +24,14 @@ iniciar-inventario.bat simulador
 
 **Com o GLPI de verdade:**
 
-1. No GLPI: **Configurar → Geral → API**. Confira "Habilitar API REST" e "Habilitar login com credenciais"
-   (ou "com token externo", se preferirem o token pessoal). Adicione um **cliente de API** para esta aplicação,
-   com a faixa de IP desta máquina, e copie o **App-Token**.
-2. Abra `backend/config/application-local.yml`, tire o `#` das linhas, preencha o endereço
-   (terminando em `/apirest.php`) e o App-Token. Essa pasta está fora do git: o token não vai para o repositório.
-3. Rode:
+1. No GLPI: **Configurar → Geral → API**. Confira "Habilitar API REST" e "Habilitar login com token externo".
+   Adicione um **cliente de API** para esta aplicação, com a faixa de IP desta máquina, e copie o **App-Token**.
+2. Crie (ou escolha) um **usuário de serviço** no GLPI, com um perfil que veja e altere computadores nas
+   entidades das lojas. Nele: Preferências → Chaves de acesso remoto → gere o **Token de API**.
+3. Abra `backend/config/application-local.yml`, tire o `#` das linhas e preencha o endereço (terminando em
+   `/apirest.php`), o App-Token e o token da conta de serviço. Essa pasta está fora do git: os tokens não vão
+   para o repositório.
+4. Rode:
 
 ```bash
 iniciar-inventario.bat
@@ -41,8 +47,8 @@ As portas (4300 e 8091) são diferentes das do HELP-AGENT (80 e 8080), que roda 
 
 ## Como usar
 
-- **Entrar:** o mesmo usuário e senha do GLPI. Quem entra por LDAP/SSO e não consegue pela API usa o token
-  pessoal (GLPI → seu nome → Preferências → Chaves de acesso remoto).
+- **Entrar:** com o login em espera, não há tela de login. Quando for religado: o mesmo usuário e senha do GLPI,
+  ou o token pessoal (GLPI → seu nome → Preferências → Chaves de acesso remoto).
 - **Lista:** busque por nome, serial, patrimônio, usuário, último login ou IP. Atalho `/` vai para a busca;
   Enter com um único resultado abre a ficha. Filtros de status e local (o local inclui os sublocais).
 - **Ficha:** **Editar** altera nome, status, responsável, local, técnico, grupo, patrimônio e descrição direto no

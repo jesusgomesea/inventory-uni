@@ -43,11 +43,18 @@ logging:
     level: "%5p [req=%X{req:-}]"
 
 inventario:
+  # Login dos técnicos EM ESPERA (30/09/2026): desligado, todos usam a conta de serviço abaixo.
+  # Religar: true (cada técnico entra com o próprio usuário do GLPI). Ver docs/PROJETO.md §3.
+  login:
+    habilitado: ${LOGIN_HABILITADO:false}
   glpi:
     url: ${GLPI_URL:}             # ex.: https://glpi.rdamasio.com.br/apirest.php
     app-token: ${GLPI_APP_TOKEN:} # Configurar → Geral → API → cliente de API
     url-web: ${GLPI_URL_WEB:}     # vazio = mesmo endereço da API sem /apirest.php
     timeout: 30s
+    # Conta de serviço (usada com o login desligado). Segredo: preencher em backend/config/application-local.yml.
+    conta-servico:
+      token: ${GLPI_CONTA_TOKEN:}
   documentos:
     pasta: ${DOCUMENTOS_PASTA:./dados/documentos} # entra no backup junto com o banco
   cache-listas: 10m

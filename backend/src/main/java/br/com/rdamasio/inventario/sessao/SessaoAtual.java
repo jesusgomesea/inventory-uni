@@ -5,6 +5,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import br.com.rdamasio.inventario.comum.ErroNegocio;
+import br.com.rdamasio.inventario.config.InventarioPropriedades;
 import br.com.rdamasio.inventario.glpi.SessaoGlpi;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -13,14 +14,30 @@ import jakarta.servlet.http.HttpSession;
  * Sessão GLPI do técnico da requisição atual, guardada na sessão HTTP desta aplicação (cookie
  * {@code INVENTARIO_SESSAO}). É o que faz cada técnico agir no GLPI com o próprio perfil e aparecer no histórico
  * com o próprio nome (docs/PROJETO.md §3).
+ *
+ * <p>Com o login desligado ({@code inventario.login.habilitado: false}, o padrão hoje), devolve a sessão da
+ * {@link ContaServico} para todos. O resto do sistema não muda: continua pedindo a sessão aqui.
  */
 @Component
 public class SessaoAtual {
 
     static final String ATRIBUTO = "glpi";
 
-    /** Sessão do técnico; sem login → 401 SESSAO_EXPIRADA (a tela manda para o login). */
+    private final InventarioPropriedades props;
+    private final ContaServico contaServico;
+
+    public SessaoAtual(InventarioPropriedades props, ContaServico contaServico) {
+        this.props = props;
+        this.contaServico = contaServico;
+    }
+
+    public boolean loginHabilitado() {
+        return props.loginHabilitado();
+    }
+
+    /** Sessão do técnico (ou da conta de serviço, com login desligado); sem login → 401 SESSAO_EXPIRADA. */
     public SessaoGlpi exigir() {
+        if (!props.loginHabilitado()) return contaServico.sessao();
         HttpSession s = requisicao().getSession(false);
         Object v = s == null ? null : s.getAttribute(ATRIBUTO);
         if (v instanceof SessaoGlpi g) return g;

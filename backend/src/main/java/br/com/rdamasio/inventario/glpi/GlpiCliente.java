@@ -112,21 +112,50 @@ public class GlpiCliente {
     // ------------------------------------------------------------------ chamadas
 
     public JsonNode get(String token, String caminho, Parametros params) {
-        return executar(comTokens(http.get().uri(uri(caminho, params)), token), "GET " + caminho);
+        return comRenovacao(token, t -> executar(comTokens(http.get().uri(uri(caminho, params)), t), "GET " + caminho));
     }
 
     public JsonNode put(String token, String caminho, Object corpo) {
-        return executar(comTokens(http.put().uri(uri(caminho, null))
-                .contentType(MediaType.APPLICATION_JSON).body(corpo), token), "PUT " + caminho);
+        return comRenovacao(token, t -> executar(comTokens(http.put().uri(uri(caminho, null))
+                .contentType(MediaType.APPLICATION_JSON).body(corpo), t), "PUT " + caminho));
     }
 
     public JsonNode post(String token, String caminho, Object corpo) {
-        return executar(comTokens(http.post().uri(uri(caminho, null))
-                .contentType(MediaType.APPLICATION_JSON).body(corpo), token), "POST " + caminho);
+        return comRenovacao(token, t -> executar(comTokens(http.post().uri(uri(caminho, null))
+                .contentType(MediaType.APPLICATION_JSON).body(corpo), t), "POST " + caminho));
     }
 
     public JsonNode delete(String token, String caminho) {
-        return executar(comTokens(http.delete().uri(uri(caminho, null)), token), "DELETE " + caminho);
+        return comRenovacao(token, t -> executar(comTokens(http.delete().uri(uri(caminho, null)), t), "DELETE " + caminho));
+    }
+
+    /**
+     * Com o login desligado, todos usam a sessão da conta de serviço, que o GLPI encerra depois de um tempo parado.
+     * Quando isso acontece numa chamada, o {@link RenovadorSessao} abre outra e a chamada é repetida uma vez, sem o
+     * usuário perceber. Com login ligado não há renovador: sessão expirada vira 401 e a tela pede login.
+     */
+    private <T> T comRenovacao(String token, java.util.function.Function<String, T> chamada) {
+        try {
+            return chamada.apply(token);
+        } catch (FalhaGlpi e) {
+            RenovadorSessao r = renovador;
+            if (!e.sessaoInvalida() || r == null) throw e;
+            String novo = r.renovar(token);
+            if (novo == null || novo.equals(token)) throw e;
+            return chamada.apply(novo);
+        }
+    }
+
+    /** Registrado pela sessão da conta de serviço (sessao/ContaServico). */
+    public interface RenovadorSessao {
+        /** Token novo no lugar de {@code expirado}; null se {@code expirado} não é da conta de serviço. */
+        String renovar(String expirado);
+    }
+
+    private volatile RenovadorSessao renovador;
+
+    public void registrarRenovador(RenovadorSessao r) {
+        this.renovador = r;
     }
 
     /**
@@ -135,6 +164,10 @@ public class GlpiCliente {
      */
     public byte[] baixar(String token, long documentoId) {
         String caminho = "/Document/" + documentoId;
+        return comRenovacao(token, t -> baixar(t, caminho));
+    }
+
+    private byte[] baixar(String token, String caminho) {
         try {
             return comTokens(http.get().uri(uri(caminho, null)), token)
                     .accept(MediaType.APPLICATION_OCTET_STREAM)

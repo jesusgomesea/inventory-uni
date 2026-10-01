@@ -18,6 +18,9 @@ import br.com.rdamasio.inventario.glpi.SessaoGlpi;
 /**
  * Login e logout. O login da aplicação é o login do GLPI: usuário e senha, ou o token pessoal do técnico
  * (Preferências → Chaves de acesso remoto no GLPI). A senha passa direto para o GLPI e não é guardada.
+ *
+ * <p>Login em espera: com {@code inventario.login.habilitado: false}, {@code GET} devolve a conta de serviço (com
+ * {@code loginHabilitado = false}, para a tela esconder "Sair" e a página de login) e {@code POST} é recusado.
  */
 @RestController
 @RequestMapping("/api/sessao")
@@ -29,7 +32,7 @@ public class SessaoController {
     }
 
     /** O que a tela sabe do técnico logado. {@code urlGlpi} alimenta os botões "Abrir no GLPI". */
-    public record Usuario(long id, String login, String nome, String perfil, String urlGlpi) {
+    public record Usuario(long id, String login, String nome, String perfil, String urlGlpi, boolean loginHabilitado) {
     }
 
     private final GlpiCliente glpi;
@@ -44,6 +47,10 @@ public class SessaoController {
 
     @PostMapping
     public Usuario entrar(@RequestBody Entrada e) {
+        if (!sessao.loginHabilitado()) {
+            throw new ErroNegocio(org.springframework.http.HttpStatus.CONFLICT, "LOGIN_DESLIGADO",
+                    "O login está desligado nesta instalação; a aplicação usa a conta de serviço do GLPI.");
+        }
         SessaoGlpi s;
         if (e.tokenPessoal() != null && !e.tokenPessoal().isBlank()) {
             s = glpi.iniciarComToken(e.tokenPessoal());
@@ -65,6 +72,7 @@ public class SessaoController {
 
     @DeleteMapping
     public ResponseEntity<Void> sair() {
+        if (!sessao.loginHabilitado()) return ResponseEntity.noContent().build(); // conta de serviço não sai
         try {
             SessaoGlpi s = sessao.exigir();
             glpi.encerrar(s.token());
@@ -77,6 +85,6 @@ public class SessaoController {
     }
 
     private Usuario usuario(SessaoGlpi s) {
-        return new Usuario(s.usuarioId(), s.login(), s.nome(), s.perfil(), props.glpi().enderecoWeb());
+        return new Usuario(s.usuarioId(), s.login(), s.nome(), s.perfil(), props.glpi().enderecoWeb(), props.loginHabilitado());
     }
 }

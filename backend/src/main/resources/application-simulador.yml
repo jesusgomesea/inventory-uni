@@ -1,12 +1,14 @@
 # Perfil "simulador": a aplicação conversa com um GLPI de mentira servido por ela mesma
 # (simulador/SimuladorGlpi, dados em simulador/dados.json). Para demonstração e testes da tela.
 # Uso: iniciar-inventario.bat simulador   (ou -Dspring-boot.run.profiles=local,simulador)
-# Login: tecnico / tecnico
+# Login (quando ligado): tecnico / tecnico. Com o login desligado, usa a conta de serviço token-tecnico.
 inventario:
   glpi:
     url: http://127.0.0.1:${server.port}/simulador-glpi/apirest.php
     app-token: simulador
     url-web: http://127.0.0.1:${server.port}/simulador-glpi
+    conta-servico:
+      token: token-tecnico # conta de serviço do simulador (login desligado)
   documentos:
     pasta: ./dados/simulador/documentos
 

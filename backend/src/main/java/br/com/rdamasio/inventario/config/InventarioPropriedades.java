@@ -11,8 +11,20 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
  * versionado: vem de {@code backend/config/application-local.yml} (fora do git) ou da variável GLPI_APP_TOKEN.
  */
 @ConfigurationProperties("inventario")
-public record InventarioPropriedades(Glpi glpi, Discos discos, Documentos documentos, Termos termos,
+public record InventarioPropriedades(Glpi glpi, Discos discos, Documentos documentos, Termos termos, Login login,
         @DefaultValue("10m") Duration cacheListas) {
+
+    /**
+     * Login dos técnicos (cada um com a própria sessão do GLPI). <b>Em espera desde 30/09/2026</b>, por decisão da TI:
+     * desligado, ninguém faz login e o backend usa a conta de serviço ({@link Glpi#contaServico()}) para todos.
+     * O código do login continua no lugar (sessao/); para religar basta {@code inventario.login.habilitado: true}.
+     */
+    public record Login(@DefaultValue("false") boolean habilitado) {
+    }
+
+    public boolean loginHabilitado() {
+        return login != null && login.habilitado();
+    }
 
     /**
      * Modelos de termo em HTML mantidos pela TI (pasta "Model Termos Eqp" na raiz do repositório). São lidos a cada
@@ -35,12 +47,14 @@ public record InventarioPropriedades(Glpi glpi, Discos discos, Documentos docume
      * @param url      endereço da API legada, terminando em {@code /apirest.php}
      * @param appToken token do cliente de API cadastrado no GLPI (Configurar → Geral → API)
      * @param urlWeb   endereço das telas do GLPI, para o botão "Abrir no GLPI"; vazio = deriva de {@code url}
+     * @param contaServico usuário do GLPI que a aplicação usa quando o login está desligado
      */
     public record Glpi(
             String url,
             String appToken,
             String urlWeb,
-            @DefaultValue("30s") Duration timeout) {
+            @DefaultValue("30s") Duration timeout,
+            ContaServico contaServico) {
 
         public boolean configurado() {
             return url != null && !url.isBlank() && appToken != null && !appToken.isBlank();
@@ -55,6 +69,18 @@ public record InventarioPropriedades(Glpi glpi, Discos discos, Documentos docume
 
         private static String semBarraFinal(String s) {
             return s.endsWith("/") ? s.substring(0, s.length() - 1) : s;
+        }
+    }
+
+    /**
+     * Conta de serviço do GLPI (login desligado). Preferir o token pessoal da conta ({@code token}: Preferências →
+     * Chaves de acesso remoto) a usuário e senha. O perfil dessa conta decide o que a aplicação vê e altera, e o
+     * histórico do GLPI registra as alterações em nome dela.
+     */
+    public record ContaServico(String token, String usuario, String senha) {
+
+        public boolean configurada() {
+            return (token != null && !token.isBlank()) || (usuario != null && !usuario.isBlank() && senha != null && !senha.isEmpty());
         }
     }
 

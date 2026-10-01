@@ -89,7 +89,7 @@ public class TermoServico {
         }
     }
 
-    /** HTML do modelo, já com os dados da máquina. */
+    /** HTML do modelo, já com os dados da máquina. {@code tecnico} null = login desligado (encarregado em branco). */
     public String gerar(String modelo, Ficha f, SessaoGlpi tecnico, String chamado) {
         Modelo m = Modelo.de(modelo);
         String html = ler(m);
@@ -114,7 +114,8 @@ public class TermoServico {
         c.add(new Campo("1. Dados do Colaborador", "Nome do Colaborador", colaborador));
         c.add(new Campo("1. Dados do Colaborador", "Loja / Unidade", local));
         if (m == Modelo.MOVIMENTACAO) {
-            c.add(new Campo("Dados do Encarregado", "Nome do Encarregado", tecnico.nome()));
+            // sem login (conta de serviço) não se sabe quem é o técnico: o campo fica para ele preencher
+            if (tecnico != null) c.add(new Campo("Dados do Encarregado", "Nome do Encarregado", tecnico.nome()));
             c.add(new Campo("Dados do Equipamento", "Tipo de Equipamento", tipoEquipamento(f.tipo())));
             c.add(new Campo("Dados do Equipamento", "Modelo", modelo));
             c.add(new Campo("Dados do Equipamento", "No de Serie", f.serial()));

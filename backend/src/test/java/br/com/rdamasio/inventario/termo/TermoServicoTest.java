@@ -17,7 +17,7 @@ import tools.jackson.databind.json.JsonMapper;
 class TermoServicoTest {
 
     private final TermoServico servico = new TermoServico(
-            new InventarioPropriedades(null, null, null, new InventarioPropriedades.Termos("../Model Termos Eqp"), null),
+            new InventarioPropriedades(null, null, null, new InventarioPropriedades.Termos("../Model Termos Eqp"), null, null),
             JsonMapper.builder().build());
 
     private final SessaoGlpi tecnico = new SessaoGlpi("t", 2, "tecnico", "Técnico Demonstração", null);

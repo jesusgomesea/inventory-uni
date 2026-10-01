@@ -10,6 +10,7 @@ import { Faixa } from '../../layout/faixa';
 /**
  * Login com o usuário do GLPI. Alternativa: o token pessoal (GLPI → Preferências → Chaves de acesso remoto),
  * útil quando o GLPI entra por outro meio (LDAP/SSO) e o login por senha na API está desabilitado.
+ * Em espera desde 30/09/2026 (login desligado no backend): a página só redireciona para a lista.
  */
 @Component({
   selector: 'inv-entrar',
@@ -61,6 +62,13 @@ export class EntrarPage {
   protected readonly comToken = signal(false);
   protected readonly enviando = signal(false);
   protected readonly erro = signal<string | null>(null);
+
+  constructor() {
+    // login em espera: quem cair aqui (favorito antigo) vai direto para a lista
+    this.sessao.verificar().then((u) => {
+      if (u && !u.loginHabilitado) this.router.navigateByUrl('/');
+    });
+  }
 
   protected alternar(): void {
     this.comToken.update((v) => !v);

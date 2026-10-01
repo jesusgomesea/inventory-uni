@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
+import br.com.rdamasio.inventario.config.InventarioPropriedades;
 import br.com.rdamasio.inventario.glpi.FalhaGlpi;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -21,6 +22,12 @@ import jakarta.servlet.http.HttpSession;
 public class TratadorErros {
 
     private static final Logger log = LoggerFactory.getLogger(TratadorErros.class);
+
+    private final InventarioPropriedades props;
+
+    public TratadorErros(InventarioPropriedades props) {
+        this.props = props;
+    }
 
     @ExceptionHandler(ErroNegocio.class)
     ProblemDetail negocio(ErroNegocio e) {
@@ -35,6 +42,12 @@ public class TratadorErros {
     @ExceptionHandler(FalhaGlpi.class)
     ProblemDetail glpi(FalhaGlpi e, HttpServletRequest req) {
         String c = e.codigo();
+        // Login desligado: quem falhou foi a conta de serviço. Não é caso de mandar ninguém para o login.
+        if (!props.loginHabilitado() && (e.sessaoInvalida() || c.equals("ERROR_GLPI_LOGIN") || c.equals("ERROR_LOGIN_PARAMETERS_MISSING"))) {
+            log.error("[GLPI] conta de serviço recusada: {} {}", c, e.getMessage());
+            return problema(HttpStatus.SERVICE_UNAVAILABLE, "CONFIGURACAO",
+                    "O GLPI recusou a conta de serviço desta aplicação (token ou senha). Avise a TI.");
+        }
         if (e.sessaoInvalida()) {
             HttpSession s = req.getSession(false);
             if (s != null) s.invalidate();

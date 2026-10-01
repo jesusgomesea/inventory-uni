@@ -64,6 +64,14 @@ tecnologia só, e a ferramenta pode virar módulo da mesma aplicação no futuro
 
 ### Autenticação: cada técnico com a própria sessão do GLPI
 
+> **Em espera desde 30/09/2026, por decisão da TI.** Com `inventario.login.habilitado: false` (o padrão hoje) não
+> há tela de login: o backend abre uma sessão com a **conta de serviço** (`inventario.glpi.conta-servico.token`),
+> usa a mesma sessão para todos e a renova sozinho quando o GLPI a encerra. O código do login continua no lugar.
+>
+> Enquanto estiver assim: a aplicação vê e altera o que o perfil da conta de serviço permite; o histórico do GLPI
+> e o "enviado por" dos documentos registram a conta de serviço, não o técnico; no termo, o encarregado fica em
+> branco; e **qualquer pessoa que alcance o endereço na rede usa a aplicação**. Para religar: `habilitado: true`.
+
 O login é o do GLPI (usuário e senha, ou o token pessoal). O backend chama `initSession`, guarda o
 `Session-Token` só no servidor (sessão HTTP, cookie `INVENTARIO_SESSAO`) e ativa todas as entidades do perfil.
 

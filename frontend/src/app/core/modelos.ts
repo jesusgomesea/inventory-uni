@@ -10,6 +10,8 @@ export interface Usuario {
   perfil: string | null;
   /** Endereço das telas do GLPI, para "Abrir no GLPI". */
   urlGlpi: string;
+  /** false = login em espera: todos usam a conta de serviço; a tela esconde "Sair" e a página de login. */
+  loginHabilitado: boolean;
 }
 
 export interface ItemLista {

@@ -80,6 +80,10 @@ usam H2 no modo PostgreSQL.
   seção pelo título. Se a TI renomear um rótulo ou uma seção no HTML, aquele campo deixa de vir preenchido (o termo
   continua funcionando). Ajuste o texto em `TermoServico.campos`. Os dados vão no script como JSON escapado
   (`jsonParaScript`): um nome com `</script>` vindo do GLPI não pode fechar o script.
+- **Login em espera:** `sessao/SessaoAtual.exigir()` devolve a sessão da `ContaServico` quando
+  `inventario.login.habilitado` é false. Ela é renovada sozinha: o `GlpiCliente` repete a chamada uma vez com um
+  token novo (`RenovadorSessao`) quando o GLPI responde `ERROR_SESSION_TOKEN_INVALID`. Com o login ligado não há
+  renovação: o 401 manda o técnico para a tela de login. Não use a sessão HTTP para nada além do login.
 - **O simulador não é o GLPI.** Ele imita o formato que esperamos do GLPI 10. Comportamento novo precisa ser
   conferido também contra o GLPI real.
 

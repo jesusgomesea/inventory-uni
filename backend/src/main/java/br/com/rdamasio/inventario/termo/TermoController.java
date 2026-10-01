@@ -46,7 +46,8 @@ public class TermoController {
     public ResponseEntity<String> termo(@PathVariable long id, @PathVariable String modelo,
             @RequestParam(required = false) String chamado) {
         SessaoGlpi s = sessao.exigir();
-        String html = termos.gerar(modelo, fichas.montar(s.token(), id), s, chamado);
+        SessaoGlpi tecnico = sessao.loginHabilitado() ? s : null; // conta de serviço não é o encarregado
+        String html = termos.gerar(modelo, fichas.montar(s.token(), id), tecnico, chamado);
         return ResponseEntity.ok()
                 .contentType(new MediaType(MediaType.TEXT_HTML, java.nio.charset.StandardCharsets.UTF_8))
                 .cacheControl(CacheControl.noStore()) // tem dados pessoais: não fica no cache do navegador

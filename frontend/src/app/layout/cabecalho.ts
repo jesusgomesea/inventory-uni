@@ -24,10 +24,13 @@ import { Icone } from './icone';
         }
       </nav>
       @if (sessao.usuario(); as u) {
+        <!-- login em espera: sem nome nem "Sair" (é sempre a conta de serviço) -->
+        @if (u.loginHabilitado) {
         <div class="usuario-topo">
           <span>{{ u.nome }}</span>
           <button type="button" (click)="sessao.sair()" title="Sair">Sair</button>
         </div>
+        }
       }
       <div class="seletor-marca" role="radiogroup" aria-label="Visual">
         @for (m of marcas; track m.id) {
